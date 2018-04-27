@@ -7,7 +7,7 @@ RUN mkdir -p /home/apps && chown apps:apps /home/apps
 
 USER root
 
-RUN apt-get update; RUN apt-get -y upgrade; apt-get clean
+RUN apt-get update; apt-get -y upgrade; apt-get clean
 RUN apt-get install -y build-essential cmake pkg-config  wget
 
 
@@ -15,11 +15,10 @@ RUN echo "deb http://download.opensuse.org/repositories/network:/messaging:/zero
 RUN wget -qO - https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key | apt-key add -
 RUN apt-get install -y libzmq-dev
 
+USER apps
 RUN mkdir -p /home/apps/project_data && chown apps:apps /home/apps/project_data
 
 WORKDIR /home/apps/project_data
 
 
-CMD "./run.sh"
-
-
+CMD [ "npm", "start" ]
